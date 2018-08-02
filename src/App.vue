@@ -1,12 +1,35 @@
 <template>
-  <div id="app">
-    <router-view/>
+  <div>
+    <v-header :userSignIn="userSignIn" @loginOut="setuserSignIn"></v-header>
+    <router-view @userSignIn="setuserSignIn"/>
   </div>
 </template>
 
 <script>
-  export default {}
-</script>
+  import vHeader from './components/common/header'
+  import Vue from 'vue'
 
-<style>
+  export default {
+    components: {
+      vHeader: vHeader
+    },
+    data() {
+      return {
+        userSignIn: null
+      }
+    },
+    methods: {
+      setuserSignIn(userSignIn) {
+        Vue.ls.set("userSignIn", userSignIn);
+        this.userSignIn = Vue.ls.get('userSignIn')
+      }
+    },
+    created() {
+      this.userSignIn = Vue.ls.get('userSignIn')
+    }
+  }
+</script>
+<style lang="less">
+ @import "assets/css/style";
 </style>
+
